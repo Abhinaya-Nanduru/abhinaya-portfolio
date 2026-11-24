@@ -1,0 +1,60 @@
+<!-- ===================================================================
+     OPTION C AND D ONLY.
+
+     Paste this block into index.html, just before </main>.
+
+     Read the fetch call below and notice what is NOT in it: no key, no
+     model name, no api.groq.com. The browser only ever talks to your own
+     backend at /api/ask. That is the whole point.
+     =================================================================== -->
+
+<section id="ask" class="panel">
+  <h2>Ask about my work</h2>
+  <p>This answers from a short set of notes I wrote. If the notes do not
+     cover it, it says so rather than inventing an answer.</p>
+
+  <form id="ask-form">
+    <label for="question">Your question</label>
+    <input id="question" name="question" type="text" maxlength="500"
+           placeholder="What have you built?" required>
+    <button type="submit" id="ask-button">Ask</button>
+  </form>
+
+  <p id="answer" class="answer" role="status" aria-live="polite"></p>
+</section>
+
+<script>
+const form = document.getElementById("ask-form");
+const button = document.getElementById("ask-button");
+const out = document.getElementById("answer");
+
+form.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const question = document.getElementById("question").value.trim();
+  if (!question) return;
+
+  button.disabled = true;
+  out.textContent = "Thinking...";
+
+  try {
+    const res = await fetch("/api/ask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: question })
+    });
+    const data = await res.json();
+
+    // textContent, not innerHTML. Model output is text, not markup.
+    if (!res.ok) {
+      out.textContent = "Something went wrong: " + (data.error || res.status);
+    } else {
+      out.textContent = data.answer;
+    }
+  } catch (err) {
+    // The network itself failed. Say so instead of leaving "Thinking..."
+    out.textContent = "Could not reach the server. Is it running?";
+  } finally {
+    button.disabled = false;
+  }
+});
+</script>

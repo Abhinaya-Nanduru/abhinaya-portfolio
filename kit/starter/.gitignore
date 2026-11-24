@@ -1,0 +1,9 @@
+# You do not need git for this assignment. This file is here so that if you
+# do use git later, the obvious mistakes are already prevented.
+.env
+.env.*
+*.key
+__pycache__/
+.venv/
+venv/
+.vercel/

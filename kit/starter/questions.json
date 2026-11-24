@@ -1,0 +1,10 @@
+[
+  {"question": "What have you built?", "answerable": true},
+  {"question": "What are you learning at the moment?", "answerable": true},
+  {"question": "How do I reach you?", "answerable": true},
+  {"question": "Who are you?", "answerable": true},
+  {"question": "Which university did Abhinaya attend for her undergraduate degree?", "answerable": false},
+  {"question": "How many years of experience do you have?", "answerable": false},
+  {"question": "What is your current salary?", "answerable": false},
+  {"question": "Have you worked at Google?", "answerable": false}
+]

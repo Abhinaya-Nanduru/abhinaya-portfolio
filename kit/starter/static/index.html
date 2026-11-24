@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Abhinaya Nanduru | Data Science Portfolio</title>
+
+<meta name="description"
+      content="Abhinaya Nanduru's Applied Data Science and Machine Learning portfolio.">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header class="hero">
+  <div class="wrap">
+
+    <h1>Abhinaya Nanduru</h1>
+
+    <p class="tagline">
+      MSc Applied Data Science Student | Aspiring Machine Learning Engineer
+    </p>
+
+    <nav class="links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#ask">Ask AI</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ABOUT SECTION -->
+
+  <section id="about" class="panel">
+
+    <h2>About Me</h2>
+
+    <p>
+      I am an MSc Applied Data Science student at Teesside University,
+      UK, with an interest in Machine Learning and Artificial Intelligence.
+      I enjoy developing practical projects using Python, machine learning
+      and backend technologies. My goal is to build reliable AI and
+      machine learning solutions.
+    </p>
+
+  </section>
+
+
+  <!-- PROJECTS SECTION -->
+
+  <section id="projects" class="panel">
+
+    <h2>My Projects</h2>
+
+    <p>
+      Here are some of my academic and practical projects.
+    </p>
+
+    <div id="project-list">
+      <p class="meta">Loading projects...</p>
+    </div>
+
+  </section>
+
+
+  <!-- AI ASSISTANT SECTION -->
+
+  <section id="ask" class="panel">
+
+    <h2>Ask About My Work</h2>
+
+    <p>
+      Ask questions about my academic background, projects,
+      technical skills and learning experience.
+      The AI assistant answers using my personal notes.
+      If information is unavailable, it should say so
+      rather than inventing an answer.
+    </p>
+
+    <form id="ask-form">
+
+      <label for="question">Your question</label>
+
+      <input
+        id="question"
+        name="question"
+        type="text"
+        maxlength="500"
+        placeholder="What projects has Abhinaya worked on?"
+        required
+      >
+
+      <button type="submit" id="ask-button">
+        Ask
+      </button>
+
+    </form>
+
+    <p
+      id="answer"
+      class="answer"
+      role="status"
+      aria-live="polite">
+    </p>
+
+  </section>
+
+
+  <!-- CONTACT SECTION -->
+
+  <section id="contact" class="panel">
+
+    <h2>Contact</h2>
+
+    <p>
+      For professional enquiries and networking,
+      you can connect with me through LinkedIn.
+    </p>
+
+    <p>
+      <a
+        href="https://www.linkedin.com/in/abhinaya-nanduru-7498a9396/"
+        target="_blank"
+        rel="noopener noreferrer">
+        LinkedIn Profile
+      </a>
+    </p>
+
+  </section>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+  <div class="wrap">
+
+    <p class="meta">
+      Built by Abhinaya Nanduru | Last updated November 2026.
+    </p>
+
+  </div>
+
+</footer>
+
+
+<!-- PROJECT LOADING SCRIPT -->
+
+<script>
+
+fetch("/api/projects")
+
+  .then(response => {
+
+    if (!response.ok) {
+      throw new Error("Server returned " + response.status);
+    }
+
+    return response.json();
+
+  })
+
+  .then(projects => {
+
+    const box = document.getElementById("project-list");
+
+    box.textContent = "";
+
+    for (const project of projects) {
+
+      const article = document.createElement("article");
+      article.className = "project";
+
+      const heading = document.createElement("h3");
+      heading.textContent = project.name;
+
+      const description = document.createElement("p");
+      description.textContent = project.what;
+
+      const technologies = document.createElement("p");
+      technologies.className = "meta";
+      technologies.textContent = "Technologies: " + project.tech;
+
+      const note = document.createElement("p");
+      note.className = "meta";
+      note.textContent = "Project details: " + project.note;
+
+      article.append(
+        heading,
+        description,
+        technologies,
+        note
+      );
+
+      box.append(article);
+
+    }
+
+  })
+
+  .catch(error => {
+
+    document.getElementById("project-list").textContent =
+      "Unable to load projects: " + error.message;
+
+  });
+
+</script>
+
+
+<!-- AI ASSISTANT SCRIPT -->
+
+<script>
+
+const form = document.getElementById("ask-form");
+
+const button = document.getElementById("ask-button");
+
+const output = document.getElementById("answer");
+
+
+form.addEventListener("submit", async (event) => {
+
+  event.preventDefault();
+
+  const question = document.getElementById("question").value.trim();
+
+  if (!question) return;
+
+  button.disabled = true;
+
+  output.textContent = "Thinking...";
+
+  try {
+
+    const response = await fetch("/api/ask", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        question: question
+      })
+
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+
+      output.textContent =
+        "Something went wrong: " + (data.error || response.status);
+
+    } else {
+
+      output.textContent = data.answer;
+
+    }
+
+  }
+
+  catch (error) {
+
+    output.textContent =
+      "Could not reach the server. Please try again.";
+
+  }
+
+  finally {
+
+    button.disabled = false;
+
+  }
+
+});
+
+</script>
+
+</body>
+</html>

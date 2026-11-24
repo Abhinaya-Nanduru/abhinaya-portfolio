@@ -1,0 +1,113 @@
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Morgan Hale | Senior AI Engineer</title>
+<style>
+  body { font-family: Georgia, serif; margin: 0; color: #333; }
+  .hero { background: #1a2744; color: #fff; padding: 90px 40px; text-align: center; }
+  .hero h1 { font-size: 3rem; margin: 0 0 10px; }
+  .hero p  { font-size: 1.2rem; color: #9aa3b5; }
+  .wrap { width: 900px; margin: 0 auto; padding: 50px 40px; }
+  .card { border: 1px solid #e0e0e0; padding: 24px; margin-bottom: 22px; border-radius: 6px; }
+  .muted { color: #c8c8c8; font-size: 0.9rem; }
+  .skills span { display: inline-block; background: #eef1f7; padding: 6px 14px;
+                 margin: 4px; border-radius: 20px; font-size: 0.9rem; }
+  footer { background: #1a2744; color: #8892a6; padding: 30px 40px; text-align: center; }
+  input, textarea { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #ccc; }
+  button { background: #1a2744; color: #fff; border: 0; padding: 12px 28px; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Morgan Hale</h1>
+  <p>Senior AI Engineer | Ex-Google | 8+ Years Experience</p>
+</div>
+
+<div class="wrap">
+
+  <div class="card">
+    <h2>About Me</h2>
+    <p>I am a passionate and results-driven Senior AI Engineer with over 8 years of
+    experience architecting scalable machine learning solutions at Google and Meta.
+    I hold a PhD in Machine Learning from Stanford University and have published
+    12 papers in top-tier conferences including NeurIPS and ICML.</p>
+    <p class="muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+    eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+  </div>
+
+  <div class="card">
+    <h2>Experience</h2>
+    <img src="images/google-logo.png" width="120">
+    <h3>Staff Machine Learning Engineer, Google (2019 - 2024)</h3>
+    <p>Led a team of 15 engineers building recommendation systems serving
+    2 billion daily active users. Reduced inference latency by 94%.</p>
+    <img src="images/meta-logo.png" width="120">
+    <h3>Senior Research Scientist, Meta AI (2016 - 2019)</h3>
+    <p>Pioneered breakthrough work in large language models.</p>
+  </div>
+
+  <div class="card skills">
+    <h2>Skills</h2>
+    <span>Python</span><span>TensorFlow</span><span>PyTorch</span><span>Kubernetes</span>
+    <span>AWS</span><span>Distributed Systems</span><span>LLMs</span><span>RAG</span>
+  </div>
+
+  <div class="card">
+    <h2>Projects</h2>
+    <p><a href="#">Neural Search Engine</a> - A semantic search platform.</p>
+    <p><a href="https://github.com/morganhale/nonexistent-project">Vector DB Benchmark</a>
+       - Comparison of vector databases.</p>
+    <p><a href="#">LLM Evaluation Harness</a> - Automated evaluation.</p>
+  </div>
+
+  <div class="card">
+    <h2>Ask my AI assistant</h2>
+    <p>Have a question about my background? Ask away.</p>
+    <input type="text" id="question" placeholder="What is your experience with RAG?">
+    <button onclick="askAI()">Ask</button>
+    <div id="answer"></div>
+  </div>
+
+  <div class="card">
+    <h2>Contact Me</h2>
+    <form>
+      <input type="text" placeholder="Your Name">
+      <input type="email" placeholder="Your Email">
+      <textarea placeholder="Your Message" rows="4"></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </div>
+
+</div>
+
+<footer>
+  <p>&copy; 2026 Morgan Hale. All rights reserved.</p>
+</footer>
+
+<script>
+const OPENAI_API_KEY = "sk-proj-8Hn2kLmQ9vXpR4tYwZbN3cFdG7jH1aS5eK8oP0iU6yT";
+
+async function askAI() {
+  const q = document.getElementById("question").value;
+  console.log("User asked:", q, "using key", OPENAI_API_KEY);
+  const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": "Bearer " + OPENAI_API_KEY,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      model: "gpt-4",
+      messages: [{ role: "user", content: q }]
+    })
+  });
+  const data = await res.json();
+  document.getElementById("answer").innerHTML = data.choices[0].message.content;
+}
+</script>
+
+</body>
+</html>

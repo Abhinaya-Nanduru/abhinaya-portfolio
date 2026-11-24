@@ -1,0 +1,20 @@
+[
+  {
+    "name": "NHS GP Appointments Pipeline",
+    "what": "Built an ETL pipeline to process NHS GP appointment data, transform datasets and load structured tables using Python and DuckDB.",
+    "tech": "Python, DuckDB, Pandas, ETL",
+    "note": "Created regional, category and duration datasets, with data quality checks to validate the results."
+  },
+  {
+    "name": "Job Advert Decoder",
+    "what": "Developed a web application using FastAPI to analyse job advertisements and extract structured information through a processing pipeline.",
+    "tech": "Python, FastAPI, PostgreSQL, NLP",
+    "note": "Implemented a five-stage pipeline, database storage, automated tests and deployment using Render."
+  },
+  {
+    "name": "Payment Fraud Detection",
+    "what": "Developed a machine-learning classification project using payment transaction data.",
+    "tech": "Python, Pandas, Scikit-learn, Logistic Regression, SVC, Random Forest",
+    "note": "Explored data preprocessing, feature engineering, class imbalance and machine-learning classification models."
+  }
+]
