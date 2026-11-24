@@ -186,9 +186,23 @@ A larger and more varied evaluation would be needed to assess reliability more c
 
 
 
-\## 8. Deployment measurement
+\## 8. Live deployment and measurement
 
+The portfolio was successfully deployed to Vercel on 24 November 2026.
 
+The live application was configured with the Groq API key using Vercel environment variables. The live `/api/health` endpoint confirmed:
+- API working: true
+- API key configured: true
+- Personal notes loaded: true
+- Mode: model
 
-Live Vercel deployment and live measurement are still pending.
+I ran the eight-question measurement against the live Vercel website.
 
+**Final live measurement: 8/8 correct (100%).**
+
+- Answerable questions correctly answered: 4/4.
+- Unsupported questions correctly refused: 4/4.
+
+The initial live measurement was blocked by Vercel deployment protection and returned HTTP 401 errors. I disabled the protection and reran the measurement successfully.
+
+The final result demonstrates that the live AI assistant answered questions supported by my notes and refused questions when the information was unavailable.
